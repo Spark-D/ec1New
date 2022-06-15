@@ -11,7 +11,7 @@ import java.util.List;
 
 abstract public class ClaimDataCreator {
 
-    private void getClamNo(ClaimDto dto) {
+    public void getClamNo(ClaimDto dto) {
         System.out.println("클레임번호 채번");
 //        dto.setClmNo("C202206150001");
     }
@@ -68,4 +68,18 @@ abstract public class ClaimDataCreator {
         claimProcessDto.setOrderBenefits(orderBenefitList);
         return claimProcessDto;
     }
+
+    public void saveClaimData(ClaimProcessDto createDataTarget, ClaimProcessDto updateDataTarget){
+        insertClaimData(createDataTarget);
+        makeUpdateClaimData(updateDataTarget);
+    }
+
+    private void makeUpdateClaimData(ClaimProcessDto updateDataTarget) {
+        System.out.println("update 수정데이터");
+    }
+
+    private void insertClaimData(ClaimProcessDto createDataTarget) {
+        System.out.println("insert 생성데이터");
+    }
+
 }

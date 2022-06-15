@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+
 public class EcouponCancelAcceptDataCreator extends ClaimDataCreator{
     @Override
     protected List<OrderClaim> makeInsertOrderClaim(ClaimDto dto) {

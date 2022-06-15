@@ -10,11 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 
-public class GeneralCancelDataCreator extends ClaimDataCreator{
-
+public class EcouponCancelCompleteDataCreator extends ClaimDataCreator{
     @Override
     protected List<OrderClaim> makeInsertOrderClaim(ClaimDto dto) {
-        System.out.println("일반상품 취소 클레임 데이터 만든다");
+
         return null;
     }
 
@@ -30,6 +29,7 @@ public class GeneralCancelDataCreator extends ClaimDataCreator{
 
     @Override
     protected List<OrderClaim> makeUpdateOrderClaim(ClaimDto dto) {
+        System.out.println("이쿠폰 취소완료 데이터 만듬");
         return null;
     }
 

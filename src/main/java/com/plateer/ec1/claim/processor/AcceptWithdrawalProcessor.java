@@ -4,14 +4,23 @@ import com.plateer.ec1.claim.creator.ClaimDataCreator;
 import com.plateer.ec1.claim.dto.ClaimDto;
 import com.plateer.ec1.claim.dto.ClaimProcessDto;
 import com.plateer.ec1.claim.enums.ClaimType;
+import com.plateer.ec1.claim.util.MonitoringLogHelper;
+import com.plateer.ec1.claim.validator.ClaimValidator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 @Component
-public class AcceptWithdrawalProcessor implements ClaimProcessor {
+@Slf4j
+public class AcceptWithdrawalProcessor extends ClaimProcessor {
 
     private static AcceptWithdrawalProcessor acceptWithdrawalProcessor;
+
+    public AcceptWithdrawalProcessor(ClaimValidator claimValidator, MonitoringLogHelper monitoringLogHelper) {
+
+        super(claimValidator, monitoringLogHelper);
+    }
 
     @PostConstruct
     private void initialize() {
@@ -19,26 +28,29 @@ public class AcceptWithdrawalProcessor implements ClaimProcessor {
     }
 
     public static AcceptWithdrawalProcessor getInstance() {
+
         return acceptWithdrawalProcessor;
     }
 
     @Override
     public void doProcess(ClaimDto dto) {
         ClaimDataCreator claimDataCreator = ClaimType.findCreator(dto.getClaimType().name());
+        Long logKey = null;
+        ClaimProcessDto createDataTarget = null;
+        ClaimProcessDto updateDataTarget = null;
 
         try{
-
-            ClaimProcessDto createDataTarget = claimDataCreator.makeCreateData(dto);
-            ClaimProcessDto updateDataTarget = claimDataCreator.makeUpdateData(dto);
+            claimDataCreator.getClamNo(dto);
+            logKey = insertLog(dto);
+            validate(dto);
+            createDataTarget = claimDataCreator.makeCreateData(dto);
+            updateDataTarget = claimDataCreator.makeUpdateData(dto);
+            claimDataCreator.saveClaimData(createDataTarget, updateDataTarget);
 
         }catch (Exception e){
-
+             log.error("AcceptWithdrawalProcess error occur  : {}", e);
         }finally {
-
+            updateLog(logKey,createDataTarget,updateDataTarget);
         }
-
-
-
-
     }
 }

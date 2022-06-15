@@ -2,6 +2,7 @@ package com.plateer.ec1.claim.enums;
 
 import com.plateer.ec1.claim.creator.ClaimDataCreator;
 import com.plateer.ec1.claim.creator.EcouponCancelAcceptDataCreator;
+import com.plateer.ec1.claim.creator.EcouponCancelCompleteDataCreator;
 import com.plateer.ec1.claim.creator.GeneralCancelDataCreator;
 import com.plateer.ec1.claim.dto.ClaimDto;
 import com.plateer.ec1.claim.processor.AcceptWithdrawalProcessor;
@@ -18,7 +19,7 @@ import java.util.function.Supplier;
 public enum ClaimType {
     CG(CompleteProcessor::getInstance, ()-> new GeneralCancelDataCreator()),
     CE(AcceptWithdrawalProcessor::getInstance, ()-> new EcouponCancelAcceptDataCreator()),
-    CC(CompleteProcessor::getInstance, ()-> new GeneralCancelDataCreator()),
+    CC(CompleteProcessor::getInstance, ()-> new EcouponCancelCompleteDataCreator()),
     RA(CompleteProcessor::getInstance, ()-> new GeneralCancelDataCreator()),
     RC(CompleteProcessor::getInstance, ()-> new GeneralCancelDataCreator()),
     RW(CompleteProcessor::getInstance, ()-> new GeneralCancelDataCreator()),
